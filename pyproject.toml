@@ -1,0 +1,21 @@
+[project]
+name = "yumeyucard"
+version = "0.1.0"
+description = "YumeCard , but in Python"
+readme = "README.md"
+authors = [
+    { name = "LIghtJUNction", email = "LIghtJUNction.me@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.2.1",
+    "pygithub>=2.6.1",
+    "toml>=0.10.2",
+]
+
+[project.scripts]
+ymyc = "yumeyucard.cli.__main__:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
