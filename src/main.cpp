@@ -4,7 +4,7 @@
 #include "read_config.hpp" // Added for listRepositories
 #include "set_config.hpp"
 #include "system_info.hpp"
-#include "version.hpp" // 包含版本信息
+#include "version.hpp.in" // 包含版本信息
 
 // 全局变量，用于处理程序终止信号
 sig_atomic_t volatile gRunning = 1;
@@ -49,7 +49,7 @@ std::pair<AppConfig, std::vector<std::string>> parseArguments(int argc, char* ar
 
 // 显示版本信息
 void printVersion() {
-    std::cout << "YumeCard GitHub 订阅工具" << std::endl;
+    std::cout << "YumeYuCard GitHub 订阅工具" << std::endl;
     std::cout << "版本: " << yumecard::version::string << std::endl;
     std::cout << "构建时间: " << yumecard::version::build_date << std::endl;
     std::cout << "Git Commit: " << yumecard::version::build_commit << std::endl;
@@ -62,9 +62,9 @@ void printVersion() {
 }
 
 void printHelp() {
-    std::cout << "YumeCard GitHub 订阅工具 v" << yumecard::version::string << " - 使用帮助" << std::endl;
+    std::cout << "YumeYuCard GitHub 订阅工具 v" << yumecard::version::string << " - 使用帮助" << std::endl;
     std::cout << "--------------------------------------" << std::endl;
-    std::cout << "用法: YumeCard [选项] <命令> [参数...]" << std::endl;
+    std::cout << "用法: YumeYuCard [选项] <命令> [参数...]" << std::endl;
     std::cout << std::endl;
     std::cout << "全局选项:" << std::endl;
     std::cout << "  --config <路径>              - 指定配置文件目录 (默认: ./config)" << std::endl;
@@ -86,12 +86,12 @@ void printHelp() {
     std::cout << "  help                         - 显示此帮助信息" << std::endl;
     std::cout << std::endl;
     std::cout << "示例:" << std::endl;
-    std::cout << "  YumeCard add YumeYuka YumeCard main" << std::endl;
-    std::cout << "  YumeCard --config ./myconfig check YumeYuka YumeCard" << std::endl;
-    std::cout << "  YumeCard --style ./mystyle --output ./images monitor 30" << std::endl;
-    std::cout << "  YumeCard set-token ghp_xxxxxxxxxxxx" << std::endl;
-    std::cout << "  YumeCard --config ./config --style ./themes test-screenshot" << std::endl;
-    std::cout << "  YumeCard --version" << std::endl;
+    std::cout << "  YumeYuCard add YumeYuCard YumeYuCard main" << std::endl;
+    std::cout << "  YumeYuCard --config ./myconfig check YumeYuCard YumeYuCard" << std::endl;
+    std::cout << "  YumeYuCard --style ./mystyle --output ./images monitor 30" << std::endl;
+    std::cout << "  YumeYuCard set-token ghp_xxxxxxxxxxxx" << std::endl;
+    std::cout << "  YumeYuCard --config ./config --style ./themes test-screenshot" << std::endl;
+    std::cout << "  YumeYuCard --version" << std::endl;
     std::cout << "--------------------------------------" << std::endl;
 }
 
@@ -203,7 +203,7 @@ int main(int argc, char* argv[]) {
     } else if (command == "add") {
         if (args.size() < 3) {
             std::cerr << "错误: add命令需要owner和repo参数" << std::endl;
-            std::cerr << "用法: YumeCard add <owner> <repo> [branch]" << std::endl;
+            std::cerr << "用法: YumeYuCard add <owner> <repo> [branch]" << std::endl;
             return 1;
         }
 
@@ -223,7 +223,7 @@ int main(int argc, char* argv[]) {
     } else if (command == "check") {
         if (args.size() < 3) {
             std::cerr << "错误: check命令需要owner和repo参数" << std::endl;
-            std::cerr << "用法: YumeCard check <owner> <repo>" << std::endl;
+            std::cerr << "用法: YumeYuCard check <owner> <repo>" << std::endl;
             return 1;
         }
 
@@ -268,7 +268,7 @@ int main(int argc, char* argv[]) {
     } else if (command == "set-token") {
         if (args.size() < 2) {
             std::cerr << "错误: set-token命令需要token参数" << std::endl;
-            std::cerr << "用法: YumeCard set-token <token>" << std::endl;
+            std::cerr << "用法: YumeYuCard set-token <token>" << std::endl;
             return 1;
         }
 

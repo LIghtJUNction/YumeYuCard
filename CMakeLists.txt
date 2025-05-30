@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
 
 # 版本信息设置
-if (DEFINED YUMECARD_VERSION)
-        set(PROJECT_VERSION ${YUMECARD_VERSION})
+if (DEFINED YUMEYUCARD_VERSION)
+        set(PROJECT_VERSION ${YUMEYUCARD_VERSION})
 else ()
         set(PROJECT_VERSION "0.1.0")
 endif ()
 
-project(YumeCard VERSION ${PROJECT_VERSION} LANGUAGES CXX)
+project(YumeYuCard VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -183,11 +183,11 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_BINARY_DIR}/include) # 包含生成的版本头文件
 
 # 源文件和头文件
-set(YUMECARD_SOURCES
+set(YUMEYUCARD_SOURCES
         src/main.cpp
 )
 
-set(YUMECARD_HEADERS
+set(YUMEYUCARD_HEADERS
         include/head.hpp
         include/github_api.hpp
         include/read_config.hpp
@@ -199,76 +199,76 @@ set(YUMECARD_HEADERS
 )
 
 # 创建可执行文件
-add_executable(YumeCard ${YUMECARD_SOURCES} ${YUMECARD_HEADERS})
+add_executable(YumeYuCard ${YUMEYUCARD_SOURCES} ${YUMEYUCARD_HEADERS})
 
 # 链接库
-target_link_libraries(YumeCard PRIVATE CURL::libcurl nlohmann_json::nlohmann_json)
+target_link_libraries(YumeYuCard PRIVATE CURL::libcurl nlohmann_json::nlohmann_json)
 
 # 平台特定的链接库
 if (WIN32)
         # Windows平台链接库
-        target_link_libraries(YumeCard PRIVATE ws2_32 wldap32 crypt32)
+        target_link_libraries(YumeYuCard PRIVATE ws2_32 wldap32 crypt32)
 elseif (UNIX AND NOT APPLE)
         # Linux平台链接库
-        target_link_libraries(YumeCard PRIVATE Threads::Threads dl)
+        target_link_libraries(YumeYuCard PRIVATE Threads::Threads dl)
 elseif (APPLE)
         # macOS平台链接库
-        target_link_libraries(YumeCard PRIVATE Threads::Threads)
+        target_link_libraries(YumeYuCard PRIVATE Threads::Threads)
         find_library(COREFOUNDATION_LIBRARY CoreFoundation)
         find_library(SYSTEMCONFIGURATION_LIBRARY SystemConfiguration)
         if (COREFOUNDATION_LIBRARY AND SYSTEMCONFIGURATION_LIBRARY)
-                target_link_libraries(YumeCard PRIVATE ${COREFOUNDATION_LIBRARY} ${SYSTEMCONFIGURATION_LIBRARY})
+                target_link_libraries(YumeYuCard PRIVATE ${COREFOUNDATION_LIBRARY} ${SYSTEMCONFIGURATION_LIBRARY})
         endif ()
 endif ()
 
 # 设置目标属性
-set_target_properties(YumeCard PROPERTIES
-        OUTPUT_NAME "YumeCard"
+set_target_properties(YumeYuCard PROPERTIES
+        OUTPUT_NAME "YumeYuCard"
         DEBUG_POSTFIX "_d"
 )
 
 # 为不同架构设置特定的输出名称
 if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set_target_properties(YumeCard PROPERTIES OUTPUT_NAME "YumeCard_x64")
+        set_target_properties(YumeYuCard PROPERTIES OUTPUT_NAME "YumeYuCard_x64")
 else ()
-        set_target_properties(YumeCard PROPERTIES OUTPUT_NAME "YumeCard_x86")
+        set_target_properties(YumeYuCard PROPERTIES OUTPUT_NAME "YumeYuCard_x86")
 endif ()
 
 # ARM架构特殊处理
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
         if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-                set_target_properties(YumeCard PROPERTIES OUTPUT_NAME "YumeCard_arm64")
+                set_target_properties(YumeYuCard PROPERTIES OUTPUT_NAME "YumeYuCard_arm64")
         else ()
-                set_target_properties(YumeCard PROPERTIES OUTPUT_NAME "YumeCard_arm32")
+                set_target_properties(YumeYuCard PROPERTIES OUTPUT_NAME "YumeYuCard_arm32")
         endif ()
 endif ()
 
 # 添加post-build命令，确保Style和config目录存在于构建目录中
-add_custom_command(TARGET YumeCard POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:YumeCard>/Style
-        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:YumeCard>/Style/backgrounds
-        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:YumeCard>/config
+add_custom_command(TARGET YumeYuCard POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:YumeYuCard>/Style
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:YumeYuCard>/Style/backgrounds
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:YumeYuCard>/config
         COMMENT "Creating required directories"
 )
 
 # 复制必要的文件到构建目录
-add_custom_command(TARGET YumeCard POST_BUILD
+add_custom_command(TARGET YumeYuCard POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${CMAKE_SOURCE_DIR}/Style/custom.css"
         "${CMAKE_SOURCE_DIR}/Style/index.html"
         "${CMAKE_SOURCE_DIR}/Style/screenshot.js"
-        "$<TARGET_FILE_DIR:YumeCard>/Style/"
+        "$<TARGET_FILE_DIR:YumeYuCard>/Style/"
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/Style/backgrounds"
-        "$<TARGET_FILE_DIR:YumeCard>/Style/backgrounds"
+        "$<TARGET_FILE_DIR:YumeYuCard>/Style/backgrounds"
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${CMAKE_SOURCE_DIR}/config/config.json"
-        "$<TARGET_FILE_DIR:YumeCard>/config/"
+        "$<TARGET_FILE_DIR:YumeYuCard>/config/"
         COMMENT "Copying required files"
 )
 
 # 安装规则
-install(TARGETS YumeCard
+install(TARGETS YumeYuCard
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
@@ -298,16 +298,16 @@ install(FILES ${CMAKE_SOURCE_DIR}/config/config.json
 
 # CPack配置用于创建安装包
 include(CPack)
-set(CPACK_PACKAGE_NAME "YumeCard")
+set(CPACK_PACKAGE_NAME "YumeYuCard")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "YumeCard GitHub订阅工具")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "YumeYuCard GitHub订阅工具")
 set(CPACK_PACKAGE_VENDOR "YumeYuka")
 
 # 平台特定的打包设置
 if (WIN32)
         set(CPACK_GENERATOR "ZIP;NSIS")
-        set(CPACK_NSIS_DISPLAY_NAME "YumeCard")
-        set(CPACK_NSIS_PACKAGE_NAME "YumeCard")
+        set(CPACK_NSIS_DISPLAY_NAME "YumeYuCard")
+        set(CPACK_NSIS_PACKAGE_NAME "YumeYuCard")
 elseif (APPLE)
         set(CPACK_GENERATOR "ZIP;DragNDrop")
 else ()
