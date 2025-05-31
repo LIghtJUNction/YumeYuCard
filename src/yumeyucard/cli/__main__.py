@@ -1,13 +1,11 @@
 from datetime import datetime
 from pathlib import Path
-import sys
 import click
 import toml
 from github import Github
 from github import Auth
 
 from ..__init__ import __version__
-
 
 
 @click.group()
@@ -81,8 +79,10 @@ def init(ctx: click.Context, root : str | Path) -> None:
 
         # STEP 2: 创建基本目录结构
         click.echo(f"创建基本目录结构")
-        (Path(root) / 'cards').mkdir(parents=True, exist_ok=True)
-        (Path(root) / 'io').mkdir(parents=True, exist_ok=True)
+
+        (Path(root) / 'data').mkdir(parents=True, exist_ok=True)
+        (Path(root) / 'data' / 'cards').mkdir(parents=True, exist_ok=True)
+        (Path(root) / 'tmp').mkdir(parents=True, exist_ok=True)
 
     click.echo(f"YumeyuCard 根目录初始化完成: {root}")
 
